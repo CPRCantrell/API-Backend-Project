@@ -55,7 +55,23 @@ product_schema = ProductSchema()
 products_schema = ProductSchema(many=True)
 
 # Resources
+class PruductListResource(Resource):
+    def get(self):
+        return products_schema.dump(Product.query.all()), 200
 
+    def post(self):
+        try:
+            add_product = product_schema.load(request.get_json())
+            db.session.add(add_product)
+            db.session.commit()
+            return product_schema.dump(add_product), 201
+        except ValidationError as error:
+            return error.messages, 400
+
+class ProductResource(Resource):
+    pass
 
 
 # Routes
+api.add_resource(PruductListResource, '/api/products')
+api.add_resource(ProductResource, '/api/products/<int:pk>')
