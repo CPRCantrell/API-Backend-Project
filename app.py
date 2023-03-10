@@ -87,6 +87,11 @@ class ProductResource(Resource):
         db.session.commit()
         return product_schema.dump(product_from_db), 200
 
+    def delete(self, product_id):
+        product_from_db = Product.query.get_or_404(product_id)
+        db.session.delete(product_from_db)
+        db.session.commit()
+        return '', 204
 
 # Routes
 api.add_resource(PruductListResource, '/api/products')
