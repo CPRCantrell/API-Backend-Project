@@ -27,7 +27,7 @@ Migrate(app, db)
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
-    discription = db.Column(db.String(255))
+    discription = db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float, nullable=False)
     inventory_quantity = db.Column(db.Integer, nullable=False)
     img_url = db.Column(db.String(255))
@@ -35,17 +35,17 @@ class Product(db.Model):
     def __repr__(self) -> str:
         return f'{self.id} {self.name} {self.discription} {self.price} {self.inventory_quantity} {self.img_url}'
 
-# Schemas
+#Schemas
 class ProductSchema(ma.Schema):
     id = fields.Integer(primary_key=True)
     name = fields.String(required=True)
-    discription = fields.String()
+    discription = fields.String(required=True)
     price = fields.Float(required=True)
     inventory_quantity = fields.Integer(required=True)
     img_url = fields.String()
 
     class Meta:
-        fields('id', 'name', 'discription', 'price', 'inventory_quantity', 'img_url')
+        fields = ('id', 'name', 'discription', 'price', 'inventory_quantity', 'img_url')
 
     @post_load
     def create_product(self, data, **kwargs):
