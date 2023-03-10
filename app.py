@@ -70,7 +70,22 @@ class PruductListResource(Resource):
 
 class ProductResource(Resource):
     def get(self, product_id):
-        return product_schema.dump(Product.query.get_or_404(product_id))
+        return product_schema.dump(Product.query.get_or_404(product_id)), 200
+
+    def put(self, product_id):
+        product_from_db = Product.query.get_or_404(product_id)
+        if 'name' in request.json:
+            product_from_db.name = request.json['name']
+        if 'discription' in request.json:
+            product_from_db.discription = request.json['discription']
+        if 'price' in request.json:
+            product_from_db.price = request.json['price']
+        if 'inventory_quantity' in request.json:
+            product_from_db.inventory_quantity = request.json['inventory_quantity']
+        if 'img_url' in request.json:
+            product_from_db.year = request.json['img_url']
+        db.session.commit()
+        return products_schema.dump(product_from_db), 200
 
 
 # Routes
