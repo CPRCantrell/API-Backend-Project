@@ -85,7 +85,7 @@ class ProductResource(Resource):
         if 'img_url' in request.json:
             product_from_db.year = request.json['img_url']
         db.session.commit()
-        return products_schema.dump(product_from_db), 200
+        return product_schema.dump(product_from_db), 200
 
 
 # Routes
