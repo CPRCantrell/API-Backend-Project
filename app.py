@@ -83,7 +83,7 @@ class ProductResource(Resource):
         if 'inventory_quantity' in request.json:
             product_from_db.inventory_quantity = request.json['inventory_quantity']
         if 'img_url' in request.json:
-            product_from_db.year = request.json['img_url']
+            product_from_db.img_url = request.json['img_url']
         db.session.commit()
         return product_schema.dump(product_from_db), 200
 
