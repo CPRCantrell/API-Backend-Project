@@ -69,9 +69,10 @@ class PruductListResource(Resource):
             return error.messages, 400
 
 class ProductResource(Resource):
-    pass
+    def get(self, product_id):
+        return product_schema.dump(Product.query.get_or_404(product_id))
 
 
 # Routes
 api.add_resource(PruductListResource, '/api/products')
-api.add_resource(ProductResource, '/api/products/<int:pk>')
+api.add_resource(ProductResource, '/api/products/<int:product_id>')
